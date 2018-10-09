@@ -29,4 +29,4 @@ Now open your browser and go to **http://localhost:8080**.
 Login with github credentials to view the profile.
 <br>
 **Important**
-If the nodemon dosent start the server properly use `node index.js` to strat the server
+If the nodemon dosen't start the server properly use `node index.js` to start the server
