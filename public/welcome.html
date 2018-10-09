@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <title>Profile</title>
+</head>
+
+<body>
+    <div class="center-screen">
+        <div class="row">
+            <div class="col-md-12 border border-info rounded p-3">
+                <div class="row p-3">
+                    <div class="col-md-12">
+                        <span class="lead">Welcome </span>
+                        <span class="lead" id="userName"></span>
+                    </div>
+                    <div class="col-md-12">
+                        <span class="lead">This is your Github Profile</span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <img class="rounded-circle shadow-lg" id="profilePic" width="250px" height="250px" />
+                    <h3 id="profileName"></h3>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="lead">You have </span>
+                            <span class="lead badge badge-success" id="numberOfRepos"> </span>
+                            <span class="lead"> public repositories</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="lead">You have </span>
+                        <span class="lead badge badge-info" id="numberOfFollowers"> </span>
+                        <span class="lead"> followers</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <span class="lead">You are following </span>
+                        <span class="lead badge badge-danger" id="numberOfFollowing"> </span>
+                        <span class="lead"> users</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const query = window.location.search.substring(1)
+    const token = query.split('access_token=')[1]
+    fetch('https://api.github.com/user', {
+        headers: {
+            Authorization: 'token ' + token
+        }
+    })
+        .then(res => res.json())
+        .then(res => {
+            const nameNode = document.createTextNode(`Welcome, ${res.name}`)
+            document.body.appendChild(nameNode)
+            document.getElementById("profileName").innerHTML = `${res.name}`;
+            document.getElementById("userName").innerHTML = " " + `${res.login}` + " ";
+            document.getElementById("numberOfRepos").innerHTML = `${res.public_repos}`;
+            document.getElementById("numberOfFollowers").innerHTML = `${res.followers}`;
+            document.getElementById("numberOfFollowing").innerHTML = `${res.following}`;
+            document.getElementById("profilePic").src = `${res.avatar_url}`;
+        })
+</script>
+
+</html>
